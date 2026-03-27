@@ -110,7 +110,7 @@ export default function Home() {
           <NetworkSwitcher network={network} onChange={setNetwork} />
         </div>
         <div className="flex flex-col items-end">
-          <PoolTicker />
+          <PoolTicker network={network} />
         </div>
       </div>
 

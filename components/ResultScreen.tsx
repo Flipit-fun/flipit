@@ -123,7 +123,7 @@ export default function ResultScreen({
             </button>
 
             <p className="text-xs text-black font-mono font-bold opacity-80">
-                Provably fair · {network}
+                Provably fair · {network === 'devnet' ? 'Demo' : 'Mainnet'}
             </p>
         </div>
     );

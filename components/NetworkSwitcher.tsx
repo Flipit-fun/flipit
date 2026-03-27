@@ -30,7 +30,7 @@ export default function NetworkSwitcher({ network, onChange }: NetworkSwitcherPr
                     }`}
             >
                 <span className={`w-1.5 h-1.5 rounded-full ${network === 'devnet' ? 'bg-yellow-500 animate-pulse' : 'bg-gray-300'}`} />
-                Devnet
+                Demo
             </button>
         </div>
     );

@@ -240,7 +240,7 @@ export default function FlipModal({ onClose, onGameCreated, network }: FlipModal
                 </button>
 
                 <p className="mt-3 text-center text-[10px] text-black font-mono font-bold uppercase tracking-widest">
-                    5% house edge · Provably fair · {network}
+                    5% house edge · Provably fair · {network === 'devnet' ? 'Demo' : 'Mainnet'}
                 </p>
             </div>
         </div>

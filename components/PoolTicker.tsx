@@ -3,19 +3,18 @@
 import { useEffect, useState } from 'react';
 import SolanaLogo from './SolanaLogo';
 
-interface PoolData {
-    balanceSol: number;
-    network: string;
+interface PoolTickerProps {
+    network: 'mainnet' | 'devnet';
 }
 
-export default function PoolTicker() {
-    const [pool, setPool] = useState<PoolData | null>(null);
+export default function PoolTicker({ network }: PoolTickerProps) {
+    const [pool, setPool] = useState<{ balanceSol: number, network: string } | null>(null);
     const [loading, setLoading] = useState(true);
     const [blink, setBlink] = useState(false);
 
     const fetchBalance = async () => {
         try {
-            const res = await fetch('/api/pool/balance');
+            const res = await fetch(`/api/pool/balance?network=${network}`);
             const data = await res.json();
             if (res.ok && typeof data.balanceSol === 'number') {
                 setPool(data);
@@ -33,7 +32,7 @@ export default function PoolTicker() {
         fetchBalance();
         const interval = setInterval(fetchBalance, 5_000); // 5s for real-time feel
         return () => clearInterval(interval);
-    }, []);
+    }, [network]);
 
     return (
         <div className="flex items-center justify-center gap-2 py-2 px-4 text-sm">
@@ -47,7 +46,7 @@ export default function PoolTicker() {
             >
                 {loading ? (
                     <span className="inline-block w-16 h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-                ) : (pool?.balanceSol != null) ? (
+                ) : (pool != null && typeof pool.balanceSol === 'number') ? (
                     <>
                         <SolanaLogo className="w-3.5 h-3.5" />
                         <span>{pool.balanceSol.toFixed(3)} SOL</span>
