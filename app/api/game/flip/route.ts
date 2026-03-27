@@ -48,32 +48,25 @@ export async function POST(req: NextRequest) {
     let payoutAmount: number | null = null;
 
     if (outcome === 'win') {
-        if (game.network === 'devnet') {
-            // Mock payout for Demo
-            payoutTxn = 'DEMO_TRANSACTION_' + Math.random().toString(36).substring(2, 11).toUpperCase();
-            payoutAmount = calculatePayout(game.amount_sol);
-            console.log(`[game/flip] Demo payout mock: ${payoutAmount} SOL to ${game.payout_wallet}`);
-        } else {
-            try {
-                const payout = await sendPayout(game.payout_wallet, game.amount_sol, game.network);
-                payoutTxn = payout.txnSignature;
-                payoutAmount = payout.payoutAmount;
-            } catch (e) {
-                console.error('[game/flip] Payout failed:', e);
-                // Still mark result but note payout failure
-                await supabase
-                    .from('games')
-                    .update({
-                        result,
-                        outcome,
-                        status: 'flipped',
-                    })
-                    .eq('id', gameId);
-                return NextResponse.json(
-                    { error: 'payout_failed', result, outcome },
-                    { status: 500 }
-                );
-            }
+        try {
+            const payout = await sendPayout(game.payout_wallet, game.amount_sol, game.network);
+            payoutTxn = payout.txnSignature;
+            payoutAmount = payout.payoutAmount;
+        } catch (e) {
+            console.error('[game/flip] Payout failed:', e);
+            // Still mark result but note payout failure
+            await supabase
+                .from('games')
+                .update({
+                    result,
+                    outcome,
+                    status: 'flipped',
+                })
+                .eq('id', gameId);
+            return NextResponse.json(
+                { error: 'payout_failed', result, outcome },
+                { status: 500 }
+            );
         }
     } else {
         payoutAmount = 0;

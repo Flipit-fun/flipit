@@ -101,7 +101,7 @@ export async function POST(req: NextRequest) {
             payout_wallet: payoutWallet,
             deposit_address: depositAddress,
             network: selectedNetwork,
-            status: selectedNetwork === 'devnet' ? 'paid' : 'pending',
+            status: 'pending',
             expires_at: expiresAt,
             ip_hash: ipHash,
         })

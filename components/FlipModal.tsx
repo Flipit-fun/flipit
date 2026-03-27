@@ -9,7 +9,6 @@ type CoinSide = 'heads' | 'tails';
 interface FlipModalProps {
     onClose: () => void;
     onGameCreated: (gameId: string, amount: number, depositAddress: string, expiresAt: string) => void;
-    network: 'mainnet' | 'devnet';
 }
 
 function isValidSolanaAddress(addr: string): boolean {
@@ -21,7 +20,8 @@ function isValidSolanaAddress(addr: string): boolean {
     }
 }
 
-export default function FlipModal({ onClose, onGameCreated, network }: FlipModalProps) {
+export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
+    const network = 'mainnet';
     const [amount, setAmount] = useState<number>(0.05);
     const [choice, setChoice] = useState<CoinSide>('heads');
     const [payoutWallet, setPayoutWallet] = useState('');
@@ -240,13 +240,8 @@ export default function FlipModal({ onClose, onGameCreated, network }: FlipModal
                 </button>
 
                 <p className="mt-3 text-center text-[10px] text-black font-mono font-bold uppercase tracking-widest">
-                    5% house edge · Provably fair · {network === 'devnet' ? 'Demo (No Real SOL)' : 'Mainnet'}
+                    5% house edge · Provably fair · Mainnet
                 </p>
-                {network === 'devnet' && (
-                    <div className="mt-4 p-2 rounded-lg bg-yellow-50 border border-yellow-200 text-[10px] font-mono text-yellow-700 text-center leading-relaxed">
-                        ⚠️ YOU ARE IN DEMO MODE. NO REAL MONEY OR SOL IS INVOLVED. THIS USES DEVNET TEST TOKENS ONLY.
-                    </div>
-                )}
             </div>
         </div>
     );
