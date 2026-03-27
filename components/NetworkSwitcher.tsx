@@ -31,6 +31,7 @@ export default function NetworkSwitcher({ network, onChange }: NetworkSwitcherPr
             >
                 <span className={`w-1.5 h-1.5 rounded-full ${network === 'devnet' ? 'bg-yellow-500 animate-pulse' : 'bg-gray-300'}`} />
                 Demo
+                {network === 'devnet' && <span className="ml-1 text-[8px] opacity-70">(No Risk)</span>}
             </button>
         </div>
     );

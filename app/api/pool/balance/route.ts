@@ -8,8 +8,14 @@ export async function GET(req: NextRequest) {
     const network = searchParams.get('network') ?? 'devnet';
 
     try {
-        const balanceSol = await getPoolBalance(network);
-        const maxBetSol = Math.floor((balanceSol / 2.0) * 100) / 100; // Round down to house safety
+        let balanceSol: number;
+        if (network === 'devnet') {
+            balanceSol = 1_000_000; // Mock infinite balance for Demo
+        } else {
+            balanceSol = await getPoolBalance(network);
+        }
+        
+        const maxBetSol = network === 'devnet' ? 100_000 : Math.floor((balanceSol / 2.0) * 100) / 100; // Round down to house safety
         return NextResponse.json({
             balanceSol,
             maxBetSol,

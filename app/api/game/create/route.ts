@@ -71,19 +71,22 @@ export async function POST(req: NextRequest) {
         );
     }
 
-    try {
-        const poolBalance = await getPoolBalance(selectedNetwork);
-        if (poolBalance < amount * 2) {
+    // Pool solvency check (skip for Demo)
+    if (selectedNetwork !== 'devnet') {
+        try {
+            const poolBalance = await getPoolBalance(selectedNetwork);
+            if (poolBalance < amount * 2) {
+                return NextResponse.json(
+                    { error: 'pool_insufficient' },
+                    { status: 503 }
+                );
+            }
+        } catch {
             return NextResponse.json(
-                { error: 'pool_insufficient' },
-                { status: 503 }
+                { error: 'pool_check_failed' },
+                { status: 500 }
             );
         }
-    } catch {
-        return NextResponse.json(
-            { error: 'pool_check_failed' },
-            { status: 500 }
-        );
     }
 
     // Insert game into Supabase
