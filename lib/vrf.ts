@@ -12,16 +12,16 @@ async function devnetFallbackFlip(gameId: string, playerChoice: CoinSide): Promi
     const { blockhash } = await connection.getLatestBlockhash('finalized');
     const seed = `${gameId}:${blockhash}`;
     const hash = crypto.createHash('sha256').update(seed).digest('hex');
-    // 50% win rate: player wins 1 out of every 2 outcomes (50/50 chance)
+    // 35% win rate: player wins 35 out of every 100 outcomes
     const num = parseInt(hash.slice(0, 8), 16);
-    const playerWins = num % 2 === 0;
+    const playerWins = num % 100 < 35;
     return playerWins ? playerChoice : (playerChoice === 'heads' ? 'tails' : 'heads');
 }
 
 /**
  * Main VRF function. Uses Switchboard VRF on mainnet,
  * falls back to crypto-based randomness on devnet.
- * Win rate is set to 50%.
+ * Win rate is set to 35%.
  */
 export async function flipCoin(gameId: string, playerChoice: CoinSide): Promise<CoinSide> {
     const network = process.env.NETWORK ?? 'devnet';
