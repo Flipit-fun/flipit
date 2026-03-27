@@ -93,21 +93,23 @@ export async function POST(req: NextRequest) {
     const depositAddress = getHousePublicKey();
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString();
 
-    const { data: game, error: dbError } = await supabase
+    const { data: game, error: insertError } = await supabase
         .from('games')
         .insert({
-            network: selectedNetwork,
             amount_sol: amount,
             choice,
             payout_wallet: payoutWallet,
-            status: 'pending',
+            deposit_address: depositAddress,
+            network: selectedNetwork,
+            status: selectedNetwork === 'devnet' ? 'paid' : 'pending',
+            expires_at: expiresAt,
             ip_hash: ipHash,
         })
         .select()
         .single();
 
-    if (dbError || !game) {
-        console.error('[game/create] DB error:', dbError);
+    if (insertError || !game) {
+        console.error('[game/create] DB error:', insertError);
         return NextResponse.json({ error: 'db_error' }, { status: 500 });
     }
 

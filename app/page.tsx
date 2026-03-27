@@ -25,7 +25,7 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [network, setNetwork] = useState<'mainnet' | 'devnet'>('devnet');
+  const [network, setNetwork] = useState<'mainnet' | 'devnet'>('mainnet');
 
   const coinRef = useRef<CoinAnimationHandle>(null);
 
@@ -38,7 +38,12 @@ export default function Home() {
     setGameAmount(amount);
     setDepositAddress(depAddr);
     setExpiresAt(expiry);
-    setGameState('deposit');
+    
+    if (network === 'devnet') {
+      setGameState('confirmed');
+    } else {
+      setGameState('deposit');
+    }
     setShowModal(false);
   };
 
@@ -146,9 +151,13 @@ export default function Home() {
               <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-4xl">💰</span>
               </div>
-              <h2 className="text-2xl font-semibold text-[#1A1A1A]">Payment Received!</h2>
+              <h2 className="text-2xl font-semibold text-[#1A1A1A]">
+                {network === 'devnet' ? 'Demo Mode Active' : 'Payment Received!'}
+              </h2>
               <p className="text-sm font-mono text-gray-400">
-                Your {gameAmount} SOL has landed. Are you ready?
+                {network === 'devnet' 
+                  ? 'Playing with 0.00 SOL stake. Good luck!' 
+                  : `Your ${gameAmount} SOL has landed. Are you ready?`}
               </p>
               {error && <p className="text-xs text-red-500 font-mono">{error}</p>}
               <button
