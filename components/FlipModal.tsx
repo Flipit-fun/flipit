@@ -9,6 +9,7 @@ type CoinSide = 'heads' | 'tails';
 interface FlipModalProps {
     onClose: () => void;
     onGameCreated: (gameId: string, amount: number, depositAddress: string, expiresAt: string) => void;
+    network: 'mainnet' | 'devnet';
 }
 
 function isValidSolanaAddress(addr: string): boolean {
@@ -20,7 +21,7 @@ function isValidSolanaAddress(addr: string): boolean {
     }
 }
 
-export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
+export default function FlipModal({ onClose, onGameCreated, network }: FlipModalProps) {
     const [amount, setAmount] = useState<number>(0.05);
     const [choice, setChoice] = useState<CoinSide>('heads');
     const [payoutWallet, setPayoutWallet] = useState('');
@@ -33,7 +34,7 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
     useEffect(() => {
         const fetchMax = async () => {
             try {
-                const res = await fetch('/api/pool/balance');
+                const res = await fetch(`/api/pool/balance?network=${network}`);
                 const data = await res.json();
                 if (data.maxBetSol) {
                     setMaxBet(data.maxBetSol);
@@ -47,7 +48,7 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
             }
         };
         fetchMax();
-    }, []);
+    }, [network]);
 
     const handleSubmit = async () => {
         setError('');
@@ -71,7 +72,7 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
             const res = await fetch('/api/game/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount, choice, payoutWallet: payoutWallet.trim() }),
+                body: JSON.stringify({ amount, choice, payoutWallet: payoutWallet.trim(), network }),
             });
             const data = await res.json();
 
@@ -239,7 +240,7 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
                 </button>
 
                 <p className="mt-3 text-center text-[10px] text-black font-mono font-bold uppercase tracking-widest">
-                    5% house edge · Provably fair · Mainnet
+                    5% house edge · Provably fair · {network}
                 </p>
             </div>
         </div>

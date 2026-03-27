@@ -32,14 +32,15 @@ export async function POST(req: NextRequest) {
     }
     rateLimitMap.set(ipHash, now);
 
-    let body: { amount?: number; choice?: string; payoutWallet?: string };
+    let body: { amount?: number; choice?: string; payoutWallet?: string; network?: string };
     try {
         body = await req.json();
     } catch {
         return NextResponse.json({ error: 'invalid_json' }, { status: 400 });
     }
 
-    const { amount, choice, payoutWallet } = body;
+    const { amount, choice, payoutWallet, network } = body;
+    const selectedNetwork = network === 'mainnet' ? 'mainnet' : 'devnet';
 
     // Validate inputs (Slider allows 0.05 to 2.0 with 0.01 steps)
     if (!amount || typeof amount !== 'number' || amount < 0.05 || amount > 2.0) {
@@ -70,9 +71,8 @@ export async function POST(req: NextRequest) {
         );
     }
 
-    // Pool solvency check
     try {
-        const poolBalance = await getPoolBalance();
+        const poolBalance = await getPoolBalance(selectedNetwork);
         if (poolBalance < amount * 2) {
             return NextResponse.json(
                 { error: 'pool_insufficient' },
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
     const { data: game, error: dbError } = await supabase
         .from('games')
         .insert({
-            network: NETWORK,
+            network: selectedNetwork,
             amount_sol: amount,
             choice,
             payout_wallet: payoutWallet,

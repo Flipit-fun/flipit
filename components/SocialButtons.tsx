@@ -15,7 +15,7 @@ export default function SocialButtons() {
                 </svg>
             </a>
             <a
-                href="https://github.com/flip-solana" // Placeholder
+                href="https://github.com/Flipit-fun"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-black transition-colors duration-200"

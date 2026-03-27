@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
         .eq('id', gameId);
 
     // Flip the coin using VRF
-    const result = await flipCoin(gameId, game.choice);
+    const result = await flipCoin(gameId, game.choice, game.network);
     const outcome = result === game.choice ? 'win' : 'lose';
 
     let payoutTxn: string | null = null;
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
     if (outcome === 'win') {
         try {
-            const payout = await sendPayout(game.payout_wallet, game.amount_sol);
+            const payout = await sendPayout(game.payout_wallet, game.amount_sol, game.network);
             payoutTxn = payout.txnSignature;
             payoutAmount = payout.payoutAmount;
         } catch (e) {

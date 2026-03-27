@@ -123,7 +123,7 @@ export default function ResultScreen({
             </button>
 
             <p className="text-xs text-black font-mono font-bold opacity-80">
-                Provably fair · Switchboard VRF
+                Provably fair · {network}
             </p>
         </div>
     );

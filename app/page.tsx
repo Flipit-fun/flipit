@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react';
 import PoolTicker from '@/components/PoolTicker';
-import NetworkToggle from '@/components/NetworkToggle';
+import NetworkSwitcher from '@/components/NetworkSwitcher';
 import FlipButton from '@/components/FlipButton';
 import FlipModal from '@/components/FlipModal';
 import DepositScreen from '@/components/DepositScreen';
@@ -25,6 +25,7 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [network, setNetwork] = useState<'mainnet' | 'devnet'>('devnet');
 
   const coinRef = useRef<CoinAnimationHandle>(null);
 
@@ -106,7 +107,7 @@ export default function Home() {
           >
             Flip
           </h1>
-          <NetworkToggle />
+          <NetworkSwitcher network={network} onChange={setNetwork} />
         </div>
         <div className="flex flex-col items-end">
           <PoolTicker />
@@ -189,7 +190,7 @@ export default function Home() {
               payoutAmount={gameResult.payoutAmount}
               payoutTxn={gameResult.payoutTxn}
               amountBet={gameAmount}
-              network={process.env.NEXT_PUBLIC_NETWORK || 'devnet'}
+              network={network}
               onPlayAgain={resetGame}
             />
           </div>
@@ -216,6 +217,7 @@ export default function Home() {
         <FlipModal
           onClose={() => setShowModal(false)}
           onGameCreated={handleGameCreated}
+          network={network}
         />
       )}
     </main>

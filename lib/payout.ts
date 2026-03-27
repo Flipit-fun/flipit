@@ -19,9 +19,10 @@ export function calculatePayout(amountSol: number): number {
 
 export async function sendPayout(
     toAddress: string,
-    amountSol: number
+    amountSol: number,
+    network?: string
 ): Promise<{ txnSignature: string; payoutAmount: number }> {
-    const connection = getConnection();
+    const connection = getConnection(network);
     const houseKeypair = getHouseKeypair();
     const payoutAmount = calculatePayout(amountSol);
 
