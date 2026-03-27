@@ -2,6 +2,9 @@
 
 This project is a high-fidelity, minimalist coin-flip application built on the Solana blockchain.
 
+CA - Not yet updates
+
+
 ## 🚀 Local Setup
 
 Follow these steps to get the project running on your local machine.
