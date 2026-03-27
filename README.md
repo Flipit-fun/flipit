@@ -2,7 +2,7 @@
 
 This project is a high-fidelity, minimalist coin-flip application built on the Solana blockchain.
 
-CA - Not yet updates
+CA - Not yet updated
 
 
 ## 🚀 Local Setup
@@ -41,7 +41,3 @@ npm run dev
 ```
 
 The application will be available at [http://localhost:3000](http://localhost:3000).
-
----
-
-Built with ❤️ on Solana

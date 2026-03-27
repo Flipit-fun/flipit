@@ -77,7 +77,7 @@ export default function DepositScreen({
             <div className="text-center">
                 <h2
                     className="text-2xl font-semibold italic mb-1"
-                    style={{ fontFamily: 'var(--font-serif)' }}
+                    style={{ fontFamily: 'var(--font-serif)', color: '#1A1A1A' }}
                 >
                     Send exactly
                 </h2>

@@ -9,7 +9,7 @@ import { getConnection } from './solana';
 import { getHouseKeypair } from './wallet';
 
 const HOUSE_EDGE_PERCENT = parseInt(
-    process.env.HOUSE_EDGE_PERCENT ?? '3',
+    process.env.HOUSE_EDGE_PERCENT ?? '5',
     10
 );
 

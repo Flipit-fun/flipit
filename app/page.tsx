@@ -208,7 +208,7 @@ export default function Home() {
           <SocialButtons />
         </div>
         <div className="text-[10px] font-mono text-black uppercase tracking-[0.2em] text-center sm:text-right">
-          © 2026 Flip Solana · 3% House Edge
+          © 2026 Flip Solana · 5% House Edge
         </div>
       </div>
 

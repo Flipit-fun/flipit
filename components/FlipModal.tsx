@@ -95,7 +95,7 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
         }
     };
 
-    const payoutAmount = (amount * 2 * 0.97).toFixed(4);
+    const payoutAmount = (amount * 2 * 0.95).toFixed(4);
 
     return (
         <div
@@ -106,15 +106,15 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
             <div
                 className="modal-panel w-full max-w-md rounded-2xl p-6 shadow-2xl"
                 style={{
-                    background: 'var(--background, #FAFAF9)',
-                    border: '1px solid rgba(0,0,0,0.08)',
+                    background: '#FAFAF9',
+                    border: '1px solid rgba(0,0,0,0.1)',
                 }}
             >
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <h2
                         className="text-2xl font-semibold"
-                        style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}
+                        style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', color: '#1A1A1A' }}
                     >
                         Place your flip
                     </h2>
@@ -202,7 +202,7 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
                         style={{
                             background: 'transparent',
                             borderColor: error && !payoutWallet ? '#DC2626' : '#E5E4E2',
-                            color: 'var(--foreground)',
+                            color: '#1A1A1A',
                             fontFamily: 'var(--font-geist-mono)',
                         }}
                         onFocus={(e) => (e.target.style.borderColor = '#1A1A1A')}
@@ -239,7 +239,7 @@ export default function FlipModal({ onClose, onGameCreated }: FlipModalProps) {
                 </button>
 
                 <p className="mt-3 text-center text-[10px] text-black font-mono font-bold uppercase tracking-widest">
-                    3% house edge · Provably fair · Mainnet
+                    5% house edge · Provably fair · Mainnet
                 </p>
             </div>
         </div>
