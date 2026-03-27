@@ -1,4 +1,4 @@
-# 🪙 Flip: Premium Solana Coin Flip dApp
+# 🪙 Flip: Solana Coin Flip dApp
 
 This project is a high-fidelity, minimalist coin-flip application built on the Solana blockchain.
 
