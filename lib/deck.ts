@@ -8,16 +8,36 @@ const NUMERIC: Record<string, number> = {
   '7': 7, '8': 8, '9': 9, '10': 10, J: 11, Q: 12, K: 13
 };
 
+let forcedQueue: string[] | null = null;
+let lastForceCardsStr: string | undefined = undefined;
+
 // Cryptographically random card draw
 export async function drawCard(): Promise<Card> {
   const isDev = process.env.NODE_ENV === 'development';
   const forceCard = process.env.FORCE_CARD;
+  const forceCards = process.env.FORCE_CARDS;
 
-  if (isDev && forceCard) {
+  if (isDev) {
+    if (forceCards) {
+      // Initialize or reset queue if env var changed
+      if (forceCards !== lastForceCardsStr) {
+        forcedQueue = forceCards.split(',').map(s => s.trim().toUpperCase());
+        lastForceCardsStr = forceCards;
+      }
+      if (forcedQueue && forcedQueue.length > 0) {
+        const val = forcedQueue.shift();
+        if (val && VALUES.includes(val as any)) {
+          return { value: val as any, suit: '♠', numericValue: NUMERIC[val] };
+        }
+      }
+    }
+
+    if (forceCard) {
       const val = forceCard.toUpperCase();
       if (VALUES.includes(val as any)) {
-          return { value: val as any, suit: '♠', numericValue: NUMERIC[val] };
+        return { value: val as any, suit: '♠', numericValue: NUMERIC[val] };
       }
+    }
   }
 
   const { randomInt } = await import('crypto'); // Node.js built-in

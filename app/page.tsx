@@ -24,17 +24,17 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* Main Content Area: Two-game selector */}
-            <div className="flex-1 flex flex-col sm:flex-row items-center justify-center w-full max-w-4xl z-10 py-12 gap-8">
+            {/* Main Content Area: Three-game selector */}
+            <div className="flex-1 flex flex-col sm:flex-row items-center sm:items-stretch justify-center w-full max-w-6xl z-10 py-12 gap-8">
                 
                 {/* Coin Flip Card */}
-                <div className="w-full max-w-sm p-8 rounded-3xl bg-white/80 backdrop-blur-md border border-gray-200 shadow-xl flex flex-col bg-opacity-90 transition-transform hover:-translate-y-2">
+                <div className="w-full sm:w-1/3 p-8 rounded-3xl bg-white/80 backdrop-blur-md border border-gray-200 shadow-xl flex flex-col bg-opacity-90 transition-transform hover:-translate-y-2">
                     <div className="text-6xl mb-4 text-center">🪙</div>
                     <h2 className="text-2xl font-semibold text-[#1A1A1A] mb-2 text-center" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>Coin Flip</h2>
                     <p className="text-gray-500 text-sm font-mono text-center mb-8 flex-grow">
                         Flip heads or tails.<br/>Double or nothing.
                     </p>
-                    <Link href="/flip" className="w-full">
+                    <Link href="/flip" className="w-full mt-auto">
                         <button className="w-full py-4 rounded-xl font-mono font-bold text-sm tracking-wider uppercase transition-all duration-200" style={{ background: '#1A1A1A', color: '#FAFAF9' }}>
                             Flip It →
                         </button>
@@ -42,14 +42,28 @@ export default function Home() {
                 </div>
 
                 {/* Hi-Lo Card */}
-                <div className="w-full max-w-sm p-8 rounded-3xl bg-white/80 backdrop-blur-md border border-gray-200 shadow-xl flex flex-col bg-opacity-90 transition-transform hover:-translate-y-2">
+                <div className="w-full sm:w-1/3 p-8 rounded-3xl bg-white/80 backdrop-blur-md border border-gray-200 shadow-xl flex flex-col bg-opacity-90 transition-transform hover:-translate-y-2">
                     <div className="text-6xl mb-4 text-center">🃏</div>
                     <h2 className="text-2xl font-semibold text-[#1A1A1A] mb-2 text-center" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>Hi-Lo</h2>
                     <p className="text-gray-500 text-sm font-mono text-center mb-8 flex-grow">
                         Guess above or below 7.<br/>Double down.
                     </p>
-                    <Link href="/hilo" className="w-full">
+                    <Link href="/hilo" className="w-full mt-auto">
                         <button className="w-full py-4 rounded-xl font-mono font-bold text-sm tracking-wider uppercase transition-all duration-200" style={{ background: '#1A1A1A', color: '#FAFAF9' }}>
+                            Deal In →
+                        </button>
+                    </Link>
+                </div>
+
+                {/* Blackjack Card */}
+                <div className="w-full sm:w-1/3 p-8 rounded-3xl bg-[#1B4332] shadow-xl flex flex-col transition-transform hover:-translate-y-2 border border-white/10">
+                    <div className="text-6xl mb-4 text-center">🂡</div>
+                    <h2 className="text-2xl font-semibold text-white mb-2 text-center" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>Blackjack</h2>
+                    <p className="text-white/70 text-sm font-mono text-center mb-8 flex-grow">
+                        Beat the dealer.<br/>Hit or stand.
+                    </p>
+                    <Link href="/blackjack" className="w-full mt-auto">
+                        <button className="w-full py-4 rounded-xl font-mono font-bold text-sm tracking-wider uppercase transition-all duration-200 bg-white text-black hover:bg-gray-200">
                             Deal Me In →
                         </button>
                     </Link>

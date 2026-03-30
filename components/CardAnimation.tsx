@@ -21,7 +21,10 @@ export default function CardAnimation({ isFlipped, drawnValue, drawnSuit }: Card
         {/* Front (which is actually the face-down back of the card initially) */}
         <div 
           className="card-front absolute inset-0 w-full h-full"
-          style={{ backfaceVisibility: 'hidden' }}
+          style={{ 
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden'
+          }}
         >
           <CardFace faceDown />
         </div>
@@ -31,6 +34,7 @@ export default function CardAnimation({ isFlipped, drawnValue, drawnSuit }: Card
           className="card-back absolute inset-0 w-full h-full"
           style={{ 
             backfaceVisibility: 'hidden', 
+            WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)' 
           }}
         >
