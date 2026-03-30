@@ -7,6 +7,7 @@ interface PaymentPollerProps {
     onConfirmed: (txnSignature: string) => void;
     onExpired: () => void;
     active: boolean;
+    verifyEndpoint?: string;
 }
 
 export default function PaymentPoller({
@@ -14,6 +15,7 @@ export default function PaymentPoller({
     onConfirmed,
     onExpired,
     active,
+    verifyEndpoint = '/api/game/verify',
 }: PaymentPollerProps) {
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const expiredRef = useRef(false);
@@ -25,7 +27,7 @@ export default function PaymentPoller({
         const poll = async () => {
             if (expiredRef.current) return;
             try {
-                const res = await fetch('/api/game/verify', {
+                const res = await fetch(verifyEndpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ gameId }),
@@ -51,7 +53,7 @@ export default function PaymentPoller({
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
-    }, [gameId, active, onConfirmed, onExpired]);
+    }, [gameId, active, onConfirmed, onExpired, verifyEndpoint]);
 
     return null; // no UI — purely logic
 }
